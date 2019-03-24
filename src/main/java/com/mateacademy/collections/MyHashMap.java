@@ -2,10 +2,7 @@ package com.mateacademy.collections;
 
 import com.mateacademy.interfaces.MyMap;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
     private Node<K, V>[] hashTable;
@@ -165,7 +162,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                 }
             }
         }
-        throw new IndexOutOfBoundsException();
+        throw new NoSuchElementException();
     }
 
     @Override

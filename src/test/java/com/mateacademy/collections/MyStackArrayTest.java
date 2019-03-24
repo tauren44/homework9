@@ -1,74 +1,76 @@
 package com.mateacademy.collections;
 
 import com.mateacademy.interfaces.MyStack;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class MyStackArrayTest {
-    private MyStack<String> myStack = new MyStackArray<>();
+    private MyStack<String> myStack;
+
+    @Before
+    public void initStack() {
+        myStack = new MyStackArray<>();
+        myStack.push("first");
+        myStack.push("second");
+        myStack.push("third");
+    }
+
+    @After
+    public void clearStack() {
+        myStack = null;
+    }
 
     @Test
-    public void isEmpty() {
+    public void isStackEmpty() {
         assertEquals(myStack.size() == 0, myStack.isEmpty());
-        myStack.push("1");
-        myStack.push("2");
+        myStack.clear();
         assertEquals(myStack.size() == 0, myStack.isEmpty());
     }
 
     @Test
-    public void push() {
+    public void pushElementToStack() {
         myStack.push("Test");
         String expectedItem = "Test";
-        int expectedSize = 1;
+        int expectedSize = 4;
         assertEquals(myStack.peek(), expectedItem);
         assertEquals(myStack.size(), expectedSize);
     }
 
     @Test
-    public void remove() {
-        myStack.push("Test");
+    public void removeElementFromStack() {
         myStack.remove();
-        int expectedSize = 0;
+        int expectedSize = 2;
         assertEquals(expectedSize, myStack.size());
     }
 
     @Test
-    public void clear() {
-        myStack.push("Test");
-        myStack.push("Test2");
+    public void clearElements() {
         myStack.clear();
         int expectedSize = 0;
         assertEquals(expectedSize, myStack.size());
     }
 
     @Test
-    public void size() {
-        myStack.push("Test");
-        myStack.push("Test2");
-        int expectedSize = 2;
-        assertEquals(expectedSize, myStack.size());
-        myStack.clear();
-        expectedSize = 0;
+    public void returnSizeOfStack() {
+        int expectedSize = 3;
         assertEquals(expectedSize, myStack.size());
     }
 
     @Test
-    public void peek() {
-        myStack.push("Test");
-        myStack.push("Test2");
-        String expectedObject = "Test2";
-        int expectedSize = 2;
+    public void peekElementFromStack() {
+        String expectedObject = "third";
+        int expectedSize = 3;
         assertEquals(expectedObject, myStack.peek());
         assertEquals(expectedSize, myStack.size());
     }
 
     @Test
-    public void pop() {
-        myStack.push("Test");
-        myStack.push("Test2");
-        String expectedObject = "Test2";
-        int expectedSize = 1;
+    public void popElementFromStack() {
+        String expectedObject = "third";
+        int expectedSize = 2;
         assertEquals(expectedObject, myStack.pop());
         assertEquals(expectedSize, myStack.size());
     }

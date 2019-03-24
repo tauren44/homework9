@@ -1,58 +1,67 @@
 package com.mateacademy.collections;
 
 import com.mateacademy.interfaces.MyMap;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.assertEquals;
 
 public class MyHashMapTest {
-    MyMap<Integer, String> myMap = new MyHashMap<>();
+    private MyMap<Integer, String> myMap;
 
-    @Test
-    public void put() {
-        myMap.put(1, "one");
-        int expectedSize = 1;
-        String expectedValue = "one";
-        assertEquals(myMap.size(), expectedSize);
-        assertEquals(myMap.get(1), expectedValue);
+    @Before
+    public void initMap() {
+        myMap = new MyHashMap<>();
+        myMap.put(1, "first");
+        myMap.put(2, "second");
+        myMap.put(3, "third");
+    }
+
+    @After
+    public void clearMap() {
+        myMap = null;
     }
 
     @Test
-    public void remove() {
-        myMap.put(1, "one");
-        myMap.put(2, "two");
-        int expectedSize = 1;
+    public void putElementToMap() {
+        myMap.put(4, "test");
+        int expectedSize = 4;
+        String expectedValue = "test";
+        assertEquals(myMap.size(), expectedSize);
+        assertEquals(myMap.get(4), expectedValue);
+    }
+
+    @Test
+    public void removeElementFromMap() {
+        int expectedSize = 2;
         myMap.remove(1);
         assertEquals(expectedSize, myMap.size());
     }
 
     @Test
-    public void get() {
-        myMap.put(15, "test");
-        String expectedValue = "test";
-        assertEquals(myMap.get(15), expectedValue);
+    public void getElementByKey() {
+        String expectedValue = "third";
+        assertEquals(myMap.get(3), expectedValue);
     }
 
     @Test
-    public void size() {
-        myMap.put(1, "one");
-        myMap.put(2, "two");
-        int expectedSize = 2;
+    public void returnSizeOfMap() {
+        int expectedSize = 3;
         assertEquals(expectedSize, myMap.size());
     }
 
     @Test
-    public void clear() {
-        myMap.put(1, "one");
-        myMap.put(2, "two");
+    public void clearElements() {
         myMap.clear();
         int expectedSize = 0;
         assertEquals(expectedSize, myMap.size());
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndexOutOfBoundsException() {
+    @Test(expected = NoSuchElementException.class)
+    public void getElementByKey_IllegalKey_ExceptionThrown() {
         myMap.get(56);
-        myMap.get(0);
     }
 }

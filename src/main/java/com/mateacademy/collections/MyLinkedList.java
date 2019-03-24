@@ -44,6 +44,10 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void remove(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IllegalArgumentException();
+        }
+
         Node<E> target = getNodeByIndex(index);
         Node<E> prev = target.prev;
         Node<E> next = target.next;
@@ -63,8 +67,10 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
+        int counter = size - 1;
+        for (int i = 0; i < counter; i++) {
             remove(0);
+            size--;
         }
     }
 

@@ -1,55 +1,67 @@
 package com.mateacademy.collections;
 
 import com.mateacademy.interfaces.MyList;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class MyArrayListTest {
-    private MyList<String> myList = new MyArrayList<>();
+    private MyList<String> myList;
 
-    @Test
-    public void add() {
-        int expectedSize = 1;
-        String expectedObject = "Test";
-        myList.add("Test");
-        assertEquals(expectedSize, myList.size());
-        assertEquals(expectedObject, myList.get(0));
+    @Before
+    public void initCollection() {
+        myList = new MyArrayList<>();
+        myList.add("first");
+        myList.add("second");
+    }
+
+    @After
+    public void clearCollection() {
+        myList = null;
     }
 
     @Test
-    public void remove() {
-        int expectedSize = 0;
-        myList.add("Test");
+    public void addElement() {
+        myList.add("third");
+        String expected = "third";
+        assertEquals(myList.get(2), expected);
+    }
+
+    @Test
+    public void removeElementByIndex() {
+        int expectedSize = 1;
         myList.remove(0);
         assertEquals(expectedSize, myList.size());
     }
 
     @Test
-    public void clear() {
-        myList.add("1");
+    public void clearAllElements() {
         myList.clear();
         int expectedSize = 0;
         assertEquals(myList.size(), expectedSize);
     }
 
     @Test
-    public void size() {
-        myList.add("1");
-        myList.add("2");
+    public void returnSizeOfCollection() {
         int expectedSize = 2;
         assertEquals(myList.size(), expectedSize);
     }
 
     @Test
-    public void get() {
-        myList.add("test");
-        String expectedObject = "test";
+    public void getElementByIndex() {
+        String expectedObject = "first";
         assertEquals(myList.get(0), expectedObject);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testIndexOutOfBoundsException() {
-        myList.get(0);
+    public void getElementByIndex_IllegalIndex_ExceptionThrown() {
+        myList.get(6);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeElementByIndex_IllegalIndex_ExceptionThrown() {
+        myList.remove(6);
     }
 }
