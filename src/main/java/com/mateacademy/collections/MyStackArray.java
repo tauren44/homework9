@@ -24,10 +24,12 @@ public class MyStackArray<E> implements MyStack<E> {
         array = new Object[DEFAULT_CAPACITY];
     }
 
+    @Override
     public boolean isEmpty() {
         return (size == 0);
     }
 
+    @Override
     public void push(E item) {
         if (size == array.length - 1) {
             resizeArray(array.length * 2);
@@ -35,6 +37,7 @@ public class MyStackArray<E> implements MyStack<E> {
         array[size++] = item;
     }
 
+    @Override
     public void remove() {
 
         if (!isEmpty()) {
@@ -45,6 +48,7 @@ public class MyStackArray<E> implements MyStack<E> {
         }
     }
 
+    @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
             array[i] = null;
@@ -52,11 +56,13 @@ public class MyStackArray<E> implements MyStack<E> {
         size = 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
     @SuppressWarnings("/unchecked/")
+    @Override
     public E peek() {
         if (isEmpty()) {
             System.out.println("Stack is empty");
@@ -66,6 +72,7 @@ public class MyStackArray<E> implements MyStack<E> {
     }
 
     @SuppressWarnings("/unchecked/")
+    @Override
     public E pop() {
         if (isEmpty()) {
             System.out.println("Stack is empty");

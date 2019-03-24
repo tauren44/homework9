@@ -24,6 +24,7 @@ public class MyLinkedList<E> implements MyList<E> {
         last = first;
     }
 
+    @Override
     public void add(E e) {
         if (first.item == null) {
             first.prev = last;
@@ -41,6 +42,7 @@ public class MyLinkedList<E> implements MyList<E> {
         size++;
     }
 
+    @Override
     public void remove(int index) {
         Node<E> target = getNodeByIndex(index);
         Node<E> prev = target.prev;
@@ -59,16 +61,19 @@ public class MyLinkedList<E> implements MyList<E> {
         size--;
     }
 
+    @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
             remove(0);
         }
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public E get(int index) {
         Node<E> target = getNodeByIndex(index);
         return target.item;

@@ -17,17 +17,13 @@ public class MyArrayList<E> implements MyList<E> {
     }
 
     /**
-     * If capacity is more than default, method will create list with chosen capacity.
-     * If capacity is from 0 to 10, method will create list with default capacity
+     * Method will create list with chosen capacity.
      */
     public MyArrayList(int capacity) {
-        if (capacity > DEFAULT_CAPACITY) {
+        if (capacity >= 0) {
             array = new Object[capacity];
-        } else if (capacity >= 0) {
-            array = new Object[DEFAULT_CAPACITY];
         } else {
-            throw new IllegalArgumentException("Illegal Capacity: " +
-                    capacity);
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
     }
 
@@ -35,7 +31,11 @@ public class MyArrayList<E> implements MyList<E> {
      * Before adding a new item, we ensure that array has enough size.
      * If it has not, we double the size of array
      */
+    @Override
     public void add(E item) {
+        if (array.length == 0) {
+            resizeArray(DEFAULT_CAPACITY);
+        }
         if (size == array.length - 1) {
             resizeArray(array.length * 2);
         }
@@ -45,7 +45,11 @@ public class MyArrayList<E> implements MyList<E> {
     /**
      * Method is moving items left for 1 index, then last item of array sets to null
      */
+    @Override
     public void remove(int index) {
+        if (index < 0 || index > size - 1) {
+            throw new IllegalArgumentException("Illegal index: " + index);
+        }
         if (size - index >= 0) {
             System.arraycopy(array, index + 1, array, index, size - index);
         }
@@ -56,6 +60,7 @@ public class MyArrayList<E> implements MyList<E> {
         }
     }
 
+    @Override
     public void clear() {
         for (int i = 0; i < array.length; i++) {
             array[i] = null;
@@ -64,10 +69,12 @@ public class MyArrayList<E> implements MyList<E> {
         resizeArray(DEFAULT_CAPACITY);
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     @SuppressWarnings("/uncheked/")
     public E get(int index) {
 

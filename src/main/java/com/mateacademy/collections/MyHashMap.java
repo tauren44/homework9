@@ -20,6 +20,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         threshold = hashTable.length * LOADFACTOR;
     }
 
+    @Override
     public boolean put(final K key, final V value) {
         if (size + 1 >= threshold) {
             threshold *= 2;
@@ -128,6 +129,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
     }
 
+    @Override
     public boolean remove(K key) {
         int index = hash(key);
 
@@ -152,6 +154,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return false;
     }
 
+    @Override
     public V get(K key) {
         int index = hash(key);
         if (index < hashTable.length && hashTable[index] != null) {
@@ -165,10 +168,12 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void clear() {
         hashTable = null;
         size = 0;
