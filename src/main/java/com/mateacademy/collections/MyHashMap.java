@@ -2,13 +2,19 @@ package com.mateacademy.collections;
 
 import com.mateacademy.interfaces.MyMap;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
-    private Node<K, V>[] hashTable;
-    private int size;
     private static final float LOADFACTOR = 0.75f;
     private static final int DEFAULT_CAPACITY = 16;
+
+    private Node<K, V>[] hashTable;
+    private int size;
     private float threshold;
 
     @SuppressWarnings("/unchecked/")
@@ -34,8 +40,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         List<Node<K, V>> nodeList = hashTable[index].nodes;
 
         for (Node<K, V> n : nodeList) {
-            if (replaceKeyWithNewValue(n, node, value) ||
-                    makeCollision(n, node, nodeList)) {
+            if (replaceKeyWithNewValue(n, node, value) || makeCollision(n, node, nodeList)) {
                 return true;
             }
         }
@@ -65,8 +70,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                                   List<Node<K, V>> nodeList) {
         if (newNode.hashCode() == nodeFromList.hashCode() &&
                 !Objects.equals(newNode.key, nodeFromList.key) &&
-                !Objects.equals(newNode.value, nodeFromList.value)
-        ) {
+                !Objects.equals(newNode.value, nodeFromList.value)) {
             nodeList.add(newNode);
             size++;
             return true;

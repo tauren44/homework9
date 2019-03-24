@@ -47,9 +47,7 @@ public class MyArrayList<E> implements MyList<E> {
      */
     @Override
     public void remove(int index) {
-        if (index < 0 || index > size - 1) {
-            throw new IllegalArgumentException("Illegal index: " + index);
-        }
+        MyListUtil.checkRange(index, size);
         if (size - index >= 0) {
             System.arraycopy(array, index + 1, array, index, size - index);
         }
@@ -77,10 +75,7 @@ public class MyArrayList<E> implements MyList<E> {
     @Override
     @SuppressWarnings("/uncheked/")
     public E get(int index) {
-
-        if (index > size - 1 || index < 0) {
-            throw new IndexOutOfBoundsException();
-        }
+        MyListUtil.checkRange(index, size);
         return (E) array[index];
     }
 

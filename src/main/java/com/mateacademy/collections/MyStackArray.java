@@ -8,15 +8,11 @@ public class MyStackArray<E> implements MyStack<E> {
     private Object[] array;
     private int size;
 
-
     public MyStackArray(int capacity) {
-        if (capacity > DEFAULT_CAPACITY) {
+        if (capacity >= 0) {
             array = new Object[capacity];
-        } else if (capacity >= 0) {
-            array = new Object[DEFAULT_CAPACITY];
         } else {
-            throw new IllegalArgumentException("Illegal Capacity: " +
-                    capacity);
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
     }
 
@@ -31,6 +27,9 @@ public class MyStackArray<E> implements MyStack<E> {
 
     @Override
     public void push(E item) {
+        if (size == 0) {
+            resizeArray(DEFAULT_CAPACITY);
+        }
         if (size == array.length - 1) {
             resizeArray(array.length * 2);
         }
@@ -65,17 +64,15 @@ public class MyStackArray<E> implements MyStack<E> {
     @Override
     public E peek() {
         if (isEmpty()) {
-            System.out.println("Stack is empty");
             return null;
         }
-        return (E) array[size-1];
+        return (E) array[size - 1];
     }
 
     @SuppressWarnings("/unchecked/")
     @Override
     public E pop() {
         if (isEmpty()) {
-            System.out.println("Stack is empty");
             return null;
         }
         return (E) array[--size];

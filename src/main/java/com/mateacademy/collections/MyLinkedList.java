@@ -44,10 +44,7 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public void remove(int index) {
-        if (index < 0 || index > size - 1) {
-            throw new IllegalArgumentException();
-        }
-
+        MyListUtil.checkRange(index, size);
         Node<E> target = getNodeByIndex(index);
         Node<E> prev = target.prev;
         Node<E> next = target.next;
@@ -81,14 +78,13 @@ public class MyLinkedList<E> implements MyList<E> {
 
     @Override
     public E get(int index) {
+        MyListUtil.checkRange(index, size);
         Node<E> target = getNodeByIndex(index);
         return target.item;
     }
 
     private Node<E> getNodeByIndex(int index) {
-        if (index >= size || index < 0) {
-            throw new IndexOutOfBoundsException();
-        }
+        MyListUtil.checkRange(index, size);
         Node<E> target = first;
         for (int i = 0; i < index; i++) {
             target = target.next;
