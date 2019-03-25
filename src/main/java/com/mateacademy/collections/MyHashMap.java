@@ -39,7 +39,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
         List<Node<K, V>> nodeList = hashTable[index].nodes;
 
-        for (Node<K, V> n : nodeList) {
+        for (Iterator<Node<K, V>> iterator = nodeList.iterator(); iterator.hasNext(); ) {
+            Node<K, V> n = iterator.next();
             if (replaceKeyWithNewValue(n, node, value) || makeCollision(n, node, nodeList)) {
                 return true;
             }
@@ -113,6 +114,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
             @Override
             public void remove() {
+
             }
         };
     }
@@ -145,11 +147,10 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
 
         List<Node<K, V>> nodeList = hashTable[index].nodes;
-        for (Node<K, V> node : nodeList) {
-            if (key.equals(node.key)) {
-                nodeList.remove(node);
-                size--;
-                return true;
+        Iterator<Node<K, V>> iterator = nodeList.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().key.equals(key)) {
+                iterator.remove();
             }
         }
         return false;
@@ -158,15 +159,21 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
     @Override
     public V get(K key) {
         int index = hash(key);
-        if (index < hashTable.length && hashTable[index] != null) {
-            List<Node<K, V>> list = hashTable[index].nodes;
-            for (Node<K, V> node : list) {
-                if (key.equals(node.key)) {
-                    return node.value;
-                }
+        V value = null;
+        if (index >= hashTable.length) {
+            throw new IllegalArgumentException();
+        }
+        if (hashTable[index] == null) {
+            throw new NoSuchElementException();
+        }
+        List<Node<K, V>> list = hashTable[index].nodes;
+        for (Node<K, V> node : list) {
+            if (key.equals(node.key)) {
+                value = node.value;
+                break;
             }
         }
-        throw new NoSuchElementException();
+        return value;
     }
 
     @Override
@@ -188,7 +195,8 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
 
         for (Node<K, V> node : temp) {
             if (node != null) {
-                for (Node<K, V> n : node.nodes) {
+                for (Iterator<Node<K, V>> iterator = node.nodes.iterator(); iterator.hasNext(); ) {
+                    Node<K, V> n = iterator.next();
                     put(n.key, n.value);
                 }
             }

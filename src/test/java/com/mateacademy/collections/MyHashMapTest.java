@@ -68,4 +68,10 @@ public class MyHashMapTest {
         myMap.get(POSITIVE_ILLEGAL_KEY);
         myMap.get(NEGATIVE_ILLEGAL_KEY);
     }
+
+    @Test(expected = NullPointerException.class)
+    public void shouldThrowNullPointerExceptionIfIndexIsNull() {
+        myMap.remove(1);
+        myMap.get(1);
+    }
 }
